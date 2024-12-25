@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";   
+}
+<style>
+    .video-bg {
+        position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+    }
+
+    /* İçerik */
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 100px;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+</style>
+
+<div>
+    <div class="video-background">
+        <video autoplay loop muted class="video-bg">
+            <source src="https://mediapool.bmwgroup.com/download/edown/tvFootageDownload.mp4?dokNo=PF0007947&actEvent=tvFootageH264" type="video/mp4">
+        </video>
+        <div class="content">
+            <h1 class="display-4">Welcome</h1>
+            <p>BMW Authorized Service</p>
+            @if(User.Identity?.IsAuthenticated == true &&(User.IsInRole("Admin") || User.IsInRole("Customer")))
+            {
+                <a class="btn btn-secondary" asp-controller="ServiceRecords" asp-action="Create">Create Service Record</a>
+            }
+        </div>
+    </div>
+</div>
+

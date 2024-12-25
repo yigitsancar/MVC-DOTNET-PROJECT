@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+@model ServiceRecord
+
+<h3>Edit Service Record</h3>
+<hr>
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input name="ServiceRecordId" type="hidden" value="@Model.ServiceRecordId">
+
+    <div class="mb-3">
+        <label asp-for="CustomerId"></label>
+        <select asp-for="CustomerId" class="form-control" asp-items="@(new SelectList(ViewBag.Customers, "Id", "FullName"))">
+            <option value="">Select Customer</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PersonnelId"></label>
+        <select asp-for="PersonnelId" class="form-control" asp-items="@(new SelectList(ViewBag.Personnel, "Id", "FullName"))">
+            <option value="">Select Personnel</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VehicleModel"></label>
+        <input asp-for="VehicleModel" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Complaint"></label>
+        <textarea asp-for="Complaint" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

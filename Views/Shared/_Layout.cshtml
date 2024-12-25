@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Authorized Service</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/IdentityApp.styles.css" asp-append-version="true" />
+    <style>
+        .custom-navbar {
+            background-color: #bababa82;
+        }
+        .navbar-brand {
+            font-size: 1.7rem; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light custom-navbar border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img
+                    src="https://i.pinimg.com/originals/c5/e0/12/c5e01235bc3665cc7d665ce6e591e3dc.png"
+                    class="logo" style="width: 70px;"
+                />     Authorized Service</a>
+                <div >
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            @if(User.IsInRole("Admin") || User.IsInRole("Personnel"))
+                            {
+                                 <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Users" asp-action="Index"style="font-size:20px">Customers</a>
+                                </li>
+                            }
+                            @if(User.IsInRole("Admin") || User.IsInRole("Customer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Users" asp-action="Index2"style="font-size:20px">Personnels</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ServiceRecords" asp-action="Index"style="font-size:20px">Service Records</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Roles" asp-action="Index"style="font-size:20px">Management</a>
+                                </li>
+                            }
+                                <form asp-controller="Account" asp-action="Logout" method="post" onsubmit="return confirm('Are you sure?')" style="display: inline-block;">
+                                    <li class="nav-item">
+                                        <button type="submit" class="nav-link text-dark" style="font-size:17px; border-radius: 10px; background-color: rgb(189, 188, 188);">Logout</button>
+                                    </li>
+                                </form>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login"style="font-size:20px">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Create"style="font-size:20px">Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div class="container">
+            &copy; 2024 - Authorized Service - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+

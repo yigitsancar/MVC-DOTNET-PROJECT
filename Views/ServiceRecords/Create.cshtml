@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "New Service Record";
+}
+
+@model IdentityApp.Models.ServiceRecord
+
+<h3>Create Service Record</h3>
+<form asp-controller="ServiceRecords" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label for="CustomerId">Customer</label>
+        @if (ViewBag.IsCustomer)
+        {
+            <!-- If user is a Customer, automatically fill the Customer field and set it to readonly -->
+            <input type="text" class="form-control" value="@ViewBag.CurrentCustomer.FullName" readonly />
+            <input type="hidden" name="CustomerId" value="@ViewBag.CurrentCustomer.Id" />
+        }
+        else
+        {
+            <!-- If user is not a Customer, display the dropdown for selecting a customer -->
+            <select name="CustomerId" class="form-control">
+                <option value="" disabled selected>Please select</option>
+                @foreach (var customer in (ViewBag.Customers as List<IdentityApp.Models.AppUser>) ?? new List<IdentityApp.Models.AppUser>())
+                {
+                    <option value="@customer.Id">@customer.FullName</option>
+                }
+            </select>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="PersonnelId">Personnel</label>
+        <select name="PersonnelId" class="form-control">
+            <option value="" disabled selected>Please select</option>
+            @foreach (var personnel in (ViewBag.Personnel as List<IdentityApp.Models.AppUser>) ?? new List<IdentityApp.Models.AppUser>())
+            {
+                <option value="@personnel.Id">@personnel.FullName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="VehicleModel">Vehicle Model</label>
+        <input type="text" name="VehicleModel" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Complaint">Complaint</label>
+        <textarea name="Complaint" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

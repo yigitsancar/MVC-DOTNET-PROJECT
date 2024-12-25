@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "New Customer";
+}
+@model CreateViewModel
+
+<style>
+    .video-bg {
+        position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+    }
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 100px;
+        width: 600px;
+        background: rgba(96, 96, 96, 0.5);
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+</style>
+
+<video autoplay loop muted class="video-bg">
+    <source src="https://mediapool.bmwgroup.com/download/edown/tvFootageDownload.mp4?dokNo=PF0007947&actEvent=tvFootageH264" type="video/mp4">
+</video>
+
+<div class="content">
+<h3>Create Customer</h3>
+<hr>
+<form asp-controller="Account" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+</div>

@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Service Records";
+}
+
+
+@model IEnumerable<IdentityApp.Models.ServiceRecord>
+
+<h3>Service Records</h3>
+@if(User.IsInRole("Admin") || User.IsInRole("Customer"))
+{
+    <a class="btn btn-secondary" asp-controller="ServiceRecords" asp-action="Create">Create Service Record</a>
+}
+<hr>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service ID</th>
+            <th>Customer Name</th>
+            <th>Personnel Name</th>
+            <th>Vehicle Model</th>
+            <th>Complaint</th>
+            <th>Created At</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.ServiceRecordId</td>
+                <td>@(record.Customer?.FullName ?? "Unknown")</td>
+                <td>@(record.Personnel?.FullName ?? "Unknown")</td>
+                <td>@record.VehicleModel</td>
+                <td>@record.Complaint</td>
+                <td>@record.CreatedAt.ToString("g")</td>
+                <td>
+                    @if(User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@record.ServiceRecordId" class="btn btn-primary btn-sm">Edit</a>
+                            <form asp-action="Delete" method="post" onsubmit="return confirm('Are you sure?')" style="display: inline-block;">
+                                <input type="hidden" value="@record.ServiceRecordId" name="id">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        }  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
